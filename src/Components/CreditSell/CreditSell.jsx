@@ -27,7 +27,7 @@ const initialProducts = [
     },
 ];
 
-// Функция для генерации случайной даты
+// Случайная дата
 function getRandomDate() {
     const start = new Date(2024, 11, 1); // 1 декабрь 2024
     const end = new Date();
@@ -39,19 +39,35 @@ function getRandomDate() {
     });
 }
 
+// Случайные клиенты
+const sampleUsers = [
+    { name: "Aliyev Jamshid", phone: "+998 91 123 45 67" },
+    { name: "Islomova Dildora", phone: "+998 93 456 78 90" },
+    { name: "Karimov Aziz", phone: "+998 99 321 65 43" },
+    { name: "Saidova Mohira", phone: "+998 90 555 55 55" },
+];
+
+function getRandomUser() {
+    const index = Math.floor(Math.random() * sampleUsers.length);
+    return sampleUsers[index];
+}
+
 export default function CreditSell() {
     const [soldProducts, setSoldProducts] = useState([]);
 
     useEffect(() => {
         const productsWithSales = initialProducts.map((product) => {
-            const soldPrice = product.price + Math.floor(Math.random() * 300000); // прибавляем прибыль
+            const soldPrice = product.price + Math.floor(Math.random() * 300000);
             const profit = soldPrice - product.price;
+            const user = getRandomUser();
 
             return {
                 ...product,
                 soldDate: getRandomDate(),
                 soldPrice,
                 profit,
+                customerName: user.name,
+                customerPhone: user.phone,
             };
         });
 
@@ -81,11 +97,28 @@ export default function CreditSell() {
                                 <span className="font-medium">Og'irlik:</span> {product.gram}g
                             </p>
                             <div className="text-sm space-y-1">
-                                <p><span className="font-medium text-gray-700">Narx:</span> {product.price.toLocaleString()} so'm</p>
-                                <p><span className="font-medium text-blue-700">Sotuv narxi:</span> {product.soldPrice.toLocaleString()} so'm</p>
-                                <p><span className="font-medium text-green-700">Foyda:</span> {product.profit.toLocaleString()} so'm</p>
+                                <p>
+                                    <span className="font-medium text-gray-700">Narx:</span>{" "}
+                                    {product.price.toLocaleString()} so'm
+                                </p>
+                                <p>
+                                    <span className="font-medium text-blue-700">Sotuv narxi:</span>{" "}
+                                    {product.soldPrice.toLocaleString()} so'm
+                                </p>
+                                <p>
+                                    <span className="font-medium text-green-700">Foyda:</span>{" "}
+                                    {product.profit.toLocaleString()} so'm
+                                </p>
                             </div>
-                            <p className="text-gray-500 text-sm">Sotilgan sana: {product.soldDate}</p>
+                            <p className="text-gray-500 text-sm">
+                                <span className="font-medium">Sotilgan sana:</span> {product.soldDate}
+                            </p>
+                            <p className="text-gray-500 text-sm">
+                                <span className="font-medium">Xaridor:</span> {product.customerName}
+                            </p>
+                            <p className="text-gray-500 text-sm">
+                                <span className="font-medium">Telefon:</span> {product.customerPhone}
+                            </p>
                         </div>
                     </div>
                 ))}

@@ -63,12 +63,15 @@ export default function Expenses() {
     };
 
     return (
-        <div className="mt-[90px] pb-10 ">
-            <div className="flex items-center justify-between mb-6">
+        <div className="mt-[90px] pb-10 px-4">
+            {/* Заголовок и кнопка */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                 <Typography variant="h3" className="font-bold text-gray-800">
                     Xarajatlar
                 </Typography>
-                <Button color="green">+ Xarajat yaratish</Button>
+                <Button color="green" className="w-full sm:w-auto">
+                    + Xarajat yaratish
+                </Button>
             </div>
 
             {/* Фильтр */}
@@ -80,6 +83,7 @@ export default function Expenses() {
                         value={startDate}
                         onChange={(e) => setStartDate(e.target.value)}
                         crossOrigin={undefined}
+                        className="w-full"
                     />
                     <Input
                         label="Tugash sanasi"
@@ -87,10 +91,15 @@ export default function Expenses() {
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)}
                         crossOrigin={undefined}
+                        className="w-full"
                     />
-                    <Button color="green">Filter</Button>
+                    <Button color="green" className="w-full md:w-auto">
+                        Filter
+                    </Button>
                 </div>
             </Card>
+
+            {/* Список расходов */}
             <div className="flex flex-col gap-6">
                 {filteredExpenses.length === 0 ? (
                     <Card className="p-6 bg-gray-50 border text-center text-gray-500">
@@ -102,45 +111,48 @@ export default function Expenses() {
                             key={expense.id}
                             className="w-full shadow-sm border border-gray-200 hover:shadow-md transition"
                         >
-                            <CardBody className="flex flex-col gap-3">
-                                <div className="flex justify-between items-center">
-                                    <div>
-                                        <Typography variant="h6" className="text-gray-800">
-                                            {expense.name}
-                                        </Typography>
-                                        <Typography className="text-gray-600 text-sm">
-                                            {expense.description}
-                                        </Typography>
-                                        <Typography className="text-gray-400 text-xs mt-1">
-                                            Sana: {dayjs(expense.date).format("YYYY-MM-DD")}
-                                        </Typography>
-                                    </div>
-                                    <div className="flex flex-col items-end gap-2">
-                                        <Typography className="text-red-600 font-bold text-lg">
-                                            ${expense.price}
-                                        </Typography>
-                                        <div className="flex gap-2">
-                                            <IconButton
-                                                variant="text"
-                                                color="blue"
-                                                onClick={() => handleUpdate(expense)}
-                                            >
-                                                <PencilIcon className="w-5 h-5" />
-                                            </IconButton>
-                                            <IconButton
-                                                variant="text"
-                                                color="red"
-                                                onClick={() => handleDelete(expense.id)}
-                                            >
-                                                <TrashIcon className="w-5 h-5" />
-                                            </IconButton>
-                                        </div>
+                            <CardBody className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-6">
+                                <div className="w-full sm:w-3/4">
+                                    <Typography variant="h6" className="text-gray-800">
+                                        {expense.name}
+                                    </Typography>
+                                    <Typography className="text-gray-600 text-sm">
+                                        {expense.description}
+                                    </Typography>
+                                    <Typography className="text-gray-400 text-xs mt-1">
+                                        Sana: {dayjs(expense.date).format("YYYY-MM-DD")}
+                                    </Typography>
+                                </div>
+                                <div className="flex flex-col items-end sm:items-center sm:flex-row gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                                    <Typography className="text-red-600 font-bold text-lg">
+                                        ${expense.price}
+                                    </Typography>
+                                    <div className="flex gap-2">
+                                        <IconButton
+                                            variant="text"
+                                            color="blue"
+                                            onClick={() => handleUpdate(expense)}
+                                        >
+                                            <PencilIcon className="w-5 h-5" />
+                                        </IconButton>
+                                        <IconButton
+                                            variant="text"
+                                            color="red"
+                                            onClick={() => handleDelete(expense.id)}
+                                        >
+                                            <TrashIcon className="w-5 h-5" />
+                                        </IconButton>
                                     </div>
                                 </div>
                             </CardBody>
                         </Card>
                     ))
                 )}
+            </div>
+
+            {/* Итоговая сумма */}
+            <div className="mt-6 text-right text-lg font-semibold text-gray-800">
+                Umumiy: ${total}
             </div>
         </div>
     );

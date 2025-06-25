@@ -60,7 +60,7 @@ export default function Debtors() {
 
     return (
         <div className="p-4 space-y-6 mt-[90px]">
-            <Typography variant="h4" color="blue-gray">Statistika: Tila bo‘yicha</Typography>
+            <Typography variant="h4" color="blue-gray">Statistika: Tilla bo‘yicha</Typography>
 
             <div className="flex flex-col sm:flex-row gap-4">
                 <Input
